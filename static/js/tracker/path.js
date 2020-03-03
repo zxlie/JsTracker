@@ -1,13 +1,14 @@
 window.Tracker = window.Tracker || {};
 
 Tracker.Path = function(){
-    var protocolRegx, absoluteRegx, rootRegx, doubleDotRegx, singleDotRegx;
+    var protocolRegx, absoluteRegx, rootRegx, doubleDotRegx, singleDotRegx, pageBaseProtocol;
 
     protocolRegx = /^\w+:\/\//;
     absoluteRegx = /^\//;
     rootRegx = /^(\w*:?\/?\/?)([\w.]+)(\/)/;
     doubleDotRegx = /\/[^\/\.]+\/\.\.\//;
     singleDotRegx = /\/\.\//;
+    pageBaseProtocol = window.location.href.split('//')[0];
 
     return {
         getBase: function( document ){
@@ -27,7 +28,7 @@ Tracker.Path = function(){
 
         merge: function( base, url ){
             if( url.indexOf( "//" ) === 0 )
-                return pageBaseProtocol + ":" + url;
+                return pageBaseProtocol + url;
 
             if( protocolRegx.test( url ) )
                 return url;
